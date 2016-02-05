@@ -17,7 +17,7 @@ class World < Gosu::Window
     @survivors = (1..2).map { Brain::Agent.new self }
 
     # Alive agents
-    @agents = []
+    @agents = [] + @survivors
 
     generate_agents
   end
