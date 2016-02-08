@@ -9,5 +9,5 @@ end
 AGENTS_NUMBER = 5
 FOOD_NUMBER = 2
 
-$world = World.new(AGENTS_NUMBER, FOOD_NUMBER, 800, 800)
+$world = World.new(AGENTS_NUMBER, FOOD_NUMBER, 1200, 800)
 $world.show

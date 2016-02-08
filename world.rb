@@ -17,6 +17,8 @@ class World < Gosu::Window
     @height = height
     self.caption = ""
 
+    @background = Gosu::Image.new(File.absolute_path("resources/background.png"), tileable: true)
+
     # Agents that survived
     @survivors = (1..2).map { Brain::Agent.new self }
 
@@ -33,9 +35,17 @@ class World < Gosu::Window
   end
 
   def update
+    %w(agents food).each do |entity|
+      instance_variable_get("@#{entity}").each do |agent|
+        agent.x += Random.rand(3) - 1
+        agent.y += Random.rand(3) - 1
+        agent.angle += Random.rand(11) - 5 
+      end
+    end
   end
 
   def draw
+    @background.draw(0, 0, 0)
     @agents.each { |a| a.draw }
     @food.each { |f| f.draw }
   end
