@@ -1,22 +1,16 @@
 module Brain
-  class Agent
-    @@world = nil
+  class Agent < Base
 
     def initialize(world)
-      @world = world
-
+      super world
+      print "agent #{@@world}\n"
+      @angle = @@world.random_angle
       @body = Body::Agent.new
-
-      @x = @world.random_x
-      @y = @world.random_y
     end
 
     def mutation
-      Agent.new(@world)
+      Agent.new(@@world)
     end
 
-    def draw
-      @body.draw(@x, @y)
-    end
   end
 end
