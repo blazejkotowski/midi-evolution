@@ -56,7 +56,7 @@ class World < Gosu::Window
       instance_variable_get("@#{var}").each do |entity|
         is = true if 
           entity.x >= x - 10 && entity.x <= x + 10 &&
-          entity.y >= y - 10 && antity.y <= y + 10
+          entity.y >= y - 10 && entity.y <= y + 10
       end
     end
     is

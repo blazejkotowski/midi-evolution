@@ -3,7 +3,6 @@ module Brain
 
     def initialize(world)
       super world
-      print "agent #{@@world}\n"
       @angle = @@world.random_angle
       @body = Body::Agent.new
     end
