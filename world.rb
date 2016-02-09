@@ -40,8 +40,8 @@ class World < Gosu::Window
 
   def update
     (@food + @agents).each do |piece|
-      new_x = piece.geometry.x + Random.rand(3) - 1
-      new_y = piece.geometry.y + Random.rand(3) - 1
+      new_x = piece.geometry.x + Random.rand(11) - 5
+      new_y = piece.geometry.y + Random.rand(11) - 5
       if reachable?(new_x, new_y)
         piece.geometry.x = new_x
         piece.geometry.y = new_y

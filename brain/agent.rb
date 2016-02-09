@@ -25,12 +25,11 @@ module Brain
         end
       end
       if closest
+        # closest = Geometry::Point.new(@@world.width/2, @@world.height/2) unless closest
         desired_angle = angle_to(closest)
         update_angle(desired_angle)
-      else
-        update_angle(@@world.random_angle)
+        update_position
       end
-      update_position
     end
 
     def eat(food)
