@@ -39,14 +39,17 @@ class World < Gosu::Window
   end
 
   def update
-    @food.each do |piece|
+    (@food + @agents).each do |piece|
       new_x = piece.geometry.x + Random.rand(3) - 1
       new_y = piece.geometry.y + Random.rand(3) - 1
       if reachable?(new_x, new_y)
         piece.geometry.x = new_x
         piece.geometry.y = new_y
       end
-      piece.feed
+    end
+
+    @food.each do |piece|
+      piece.update
     end
 
     @agents.each do |agent|
@@ -67,13 +70,11 @@ class World < Gosu::Window
   end
 
   def random_x
-    x = Random.rand(width)
-    x
+    Random.rand(width)
   end
 
   def random_y
-    y = Random.rand(height)
-    y 
+    Random.rand(height)
   end
 
   def occupied?(x, y, excluded = nil)
@@ -112,7 +113,7 @@ class World < Gosu::Window
     end
 
     def generate_food
-      (@food_number-@food.size).times do
+      Random.rand(@food_number-@food.size).times do
         @food << Brain::Food.new(self)
       end
     end

@@ -27,8 +27,10 @@ module Brain
       if closest
         desired_angle = angle_to(closest)
         update_angle(desired_angle)
-        update_position
+      else
+        update_angle(@@world.random_angle)
       end
+      update_position
     end
 
     def eat(food)

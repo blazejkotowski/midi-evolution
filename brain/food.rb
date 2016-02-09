@@ -1,7 +1,11 @@
 module Brain
   class Food < Base
+    MAX_LIFETIME = 2000
+
     def initialize(world)
       super world
+      @frames = 0
+      @lifetime = Random.rand(MAX_LIFETIME)
       @body = Body::Food.new
     end
 
@@ -20,6 +24,18 @@ module Brain
         closest.eat(self)
         @@world.food -= [self]
       end
+    end
+
+    def disappear
+      if @frames > @lifetime
+        @@world.food -= [self]
+      end 
+    end
+
+    def update
+      @frames += 1
+      disappear
+      feed
     end
   end
 end
