@@ -1,6 +1,10 @@
 require 'gosu'
+require 'geometry'
 
 class World < Gosu::Window
+  FOOD_FREQUENCY = 1000
+  attr_accessor :agents, :food 
+
   @@world = nil
   def self.instance
     @@world
@@ -8,6 +12,8 @@ class World < Gosu::Window
 
   def initialize(agents_number, food_number, width = 800, height = 800)
     super width, height
+
+    @frames = 0
 
     @agents = @food = []
 
@@ -27,20 +33,30 @@ class World < Gosu::Window
 
     generate_agents
 
-    # Food
-
     # Existing food
     @food = []
     generate_food
   end
 
   def update
-    %w(agents food).each do |entity|
-      instance_variable_get("@#{entity}").each do |agent|
-        agent.x += Random.rand(3) - 1
-        agent.y += Random.rand(3) - 1
-        agent.angle += Random.rand(11) - 5 
+    @food.each do |piece|
+      new_x = piece.geometry.x + Random.rand(3) - 1
+      new_y = piece.geometry.y + Random.rand(3) - 1
+      if reachable?(new_x, new_y)
+        piece.geometry.x = new_x
+        piece.geometry.y = new_y
       end
+      piece.feed
+    end
+
+    @agents.each do |agent|
+      agent.move
+    end
+
+    @frames += 1
+    if @frames >= FOOD_FREQUENCY
+      @frames = 0
+      generate_food
     end
   end
 
@@ -60,16 +76,26 @@ class World < Gosu::Window
     y 
   end
 
-  def occupied(x, y)
+  def occupied?(x, y, excluded = nil)
     is = false
     %w(agents food).each do |var|
       instance_variable_get("@#{var}").each do |entity|
-        is = true if 
-          entity.x >= x - 10 && entity.x <= x + 10 &&
-          entity.y >= y - 10 && entity.y <= y + 10
+        unless entity == excluded
+          is = true if 
+            entity.x >= x - 10 && entity.x <= x + 10 &&
+            entity.y >= y - 10 && entity.y <= y + 10
+        end
       end
     end
     is
+  end
+
+  def on_map?(x, y)
+    x >= 0 && y >= 0 && x <= @width && y <= @height 
+  end
+
+  def reachable?(x, y, excluded = nil)
+    on_map?(x,y) # && !occupied?(x, y, excluded)
   end
 
   def random_angle
@@ -86,7 +112,7 @@ class World < Gosu::Window
     end
 
     def generate_food
-      @food_number.times do
+      (@food_number-@food.size).times do
         @food << Brain::Food.new(self)
       end
     end
