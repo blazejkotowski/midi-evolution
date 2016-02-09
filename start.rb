@@ -6,8 +6,8 @@ dirs.each do |dir|
 end
 
 
-AGENTS_NUMBER = 5
-FOOD_NUMBER = 10
+AGENTS_NUMBER = 40
+FOOD_NUMBER = 20
 
 $world = World.new(AGENTS_NUMBER, FOOD_NUMBER, 1200, 1000)
 $world.show

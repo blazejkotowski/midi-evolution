@@ -1,7 +1,7 @@
 module Brain
   class Agent < Base
-    TRANSPOSITION_SPEED = 1
-    ANGLE_SPEED = 5
+    TRANSPOSITION_SPEED = 4
+    ANGLE_SPEED = 20
 
     attr_accessor :speed
 

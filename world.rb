@@ -2,7 +2,7 @@ require 'gosu'
 require 'geometry'
 
 class World < Gosu::Window
-  FOOD_FREQUENCY = 1000
+  FOOD_FREQUENCY = 250
   attr_accessor :agents, :food 
 
   @@world = nil
@@ -96,7 +96,15 @@ class World < Gosu::Window
   end
 
   def reachable?(x, y, excluded = nil)
-    on_map?(x,y) # && !occupied?(x, y, excluded)
+    # result = true
+    # [x-10, x+10].each do |xx|
+    #   [y-10, y+10].each do |yy|
+    #     result = false unless on_map(xx,yy)
+    #   end
+    # end
+    # result
+    # on_map?(x,y) # && !occupied?(x, y, excluded)
+    true
   end
 
   def random_angle
