@@ -5,4 +5,4 @@ It is a project embracing concepts of evolutionary algorithmic approach. It is a
 
 ----------
 
-![1](public/readme/1.png)
+![1](1.png)
